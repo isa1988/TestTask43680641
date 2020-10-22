@@ -21,10 +21,19 @@ namespace TestTask.DAL.Repositories
             return Guid.NewGuid();
         }
 
-        public bool IsFullNameHereTable(string fullName)
+        public bool IsFullNameHereTable(string fullName, Guid? id = null)
         {
             // В данной задаче SQL Lite не позволяет без учеча регистра по этому в целях побыстрее сделать и не зависаит над решением было принято решение применить ToList()
-            bool flag = contextSpaTestTask.Users.ToList().Any(x => x.FullName.ToLower() == fullName.ToLower());
+            bool flag = false;
+            if (!id.HasValue)
+            {
+                flag = contextSpaTestTask.Users.ToList().Any(x => x.FullName.ToLower() == fullName.ToLower());
+            }
+            else
+            {
+                flag = contextSpaTestTask.Users.ToList().Any(x => x.FullName.ToLower() == fullName.ToLower() && x.Id != id.Value);
+            }
+                
             return flag;
         }
 

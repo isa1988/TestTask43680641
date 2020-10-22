@@ -5,7 +5,7 @@ namespace TestTask.Core.Contracts
 {
     public interface IPositionRepository : IRepository<Position, Guid>
     {
-        bool IsNameHereTable(string name);
+        bool IsNameHereTable(string name, Guid? id = null);
 
 
     }

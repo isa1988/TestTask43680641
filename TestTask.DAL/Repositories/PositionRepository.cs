@@ -21,10 +21,18 @@ namespace TestTask.DAL.Repositories
             return Guid.NewGuid();
         }
 
-        public bool IsNameHereTable(string name)
+        public bool IsNameHereTable(string name, Guid? id = null)
         {
             // В данной задаче SQL Lite не позволяет без учеча регистра по этому в целях побыстрее сделать и не зависаит над решением было принято решение применить ToList()
-            var flag = contextSpaTestTask.Positions.ToList().Any(x => x.Name.ToUpper() == name.ToUpper());
+            var flag = false;
+            if (!id.HasValue)
+            {
+                flag = contextSpaTestTask.Positions.ToList().Any(x => x.Name.ToUpper() == name.ToUpper());
+            }
+            else
+            {
+                flag = contextSpaTestTask.Positions.ToList().Any(x => x.Name.ToUpper() == name.ToUpper() && x.Id != id.Value);
+            }
 
             return flag;
         }
