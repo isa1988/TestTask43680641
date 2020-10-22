@@ -17,7 +17,7 @@ namespace TestTask.Services.Services.Contracts
 
         Task<EntityOperationResult<T>> UpdateAsync(TDto offerDto);
 
-        Task<EntityOperationResult<T>> DeleteItemAsync(TDto entity);
+        
 
         /// <summary>
         /// Вернуть все записи
@@ -37,5 +37,7 @@ namespace TestTask.Services.Services.Contracts
         /// <param name="id">Идентификатор записи</param>
         /// <returns></returns>
         Task<TDto> GetByIdAsync(TId id);
+
+        Task<EntityOperationResult<T>> DeleteItemAsync(TId id);
     }
 }

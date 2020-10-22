@@ -5,10 +5,11 @@ using AutoMapper;
 using TestTask.Core.Contracts;
 using TestTask.Core.DataBase;
 using TestTask.Services.Dto;
+using TestTask.Services.Services.Contracts;
 
 namespace TestTask.Services.Services
 {
-    public class PositionService : GeneralService<Position, PositionDto, Guid>
+    public class PositionService : GeneralService<Position, PositionDto, Guid>, IPositionService
     {
         private readonly IPositionRepository positionRepository;
         public PositionService(IMapper mapper, IPositionRepository repository) : base(new PositionDto(), mapper, repository)

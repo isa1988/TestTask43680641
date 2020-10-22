@@ -91,8 +91,6 @@ namespace TestTask.Services.Services
                 return EntityOperationResult<T>.Failure().AddError(ex.Message);
             }
         }
-
-        public abstract Task<EntityOperationResult<T>> DeleteItemAsync(TDto dto);
     }
 
     public abstract class GeneralService<T, TDto, TId> : GeneralService<T, TDto>, IGeneralService<T, TDto, TId>
@@ -112,11 +110,11 @@ namespace TestTask.Services.Services
 
         protected abstract string CkeckBeforeDelete(T value);
 
-        public override async Task<EntityOperationResult<T>> DeleteItemAsync(TDto dto)
+        public async Task<EntityOperationResult<T>> DeleteItemAsync(TId id)
         {
             try
             {
-                var entity = await extendedRepositoryBase.GetByIdAsync(dto.Id);
+                var entity = await extendedRepositoryBase.GetByIdAsync(id);
                 if (entity  == null)
                 {
                     return EntityOperationResult<T>.Failure().AddError("Не найдена запись");
