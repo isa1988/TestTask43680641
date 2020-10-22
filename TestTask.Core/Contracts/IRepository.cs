@@ -10,7 +10,9 @@ namespace TestTask.Core.Contracts
         Task<T> CreateAsync(T entity);
         void Update(T entity);
         
-        void Delete(List<T> entities);
+        void Delete(T entity);
+
+        void Save();
 
         Task<List<T>> GetAllAsync();
 

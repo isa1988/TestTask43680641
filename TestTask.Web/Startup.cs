@@ -10,6 +10,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using TestTask.Core.Contracts;
+using TestTask.DAL.DataBase.Initializer;
+using TestTask.DAL.Repositories;
+using TestTask.Web.AppStart;
 
 namespace TestTask.Web
 {
@@ -25,11 +29,15 @@ namespace TestTask.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDatabaseContext(Configuration);
+            services.AddScoped<IPositionRepository, PositionRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IDbInitializer, DbInitializer>();
             services.AddControllers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IDbInitializer initializer)
         {
             if (env.IsDevelopment())
             {
@@ -41,6 +49,8 @@ namespace TestTask.Web
             app.UseRouting();
 
             app.UseAuthorization();
+
+            initializer.Initialize();
 
             app.UseEndpoints(endpoints =>
             {
